@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="">
+        <table>
+            <thead>
+                <th>Plate Number</th>
+                <th>Time</th>
+            </thead>
+            <tbody id="tbody1"></tbody>
+        </table>
+    </div>
+
+
+</body>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCKbTF6RVa2RyrTeUZdndSa8VL7FMcfYKw",
+        authDomain: "ongzhfyp-17d4a.firebaseapp.com",
+        projectId: "ongzhfyp-17d4a",
+        storageBucket: "ongzhfyp-17d4a.appspot.com",
+        messagingSenderId: "620764528797",
+        appId: "1:620764528797:web:c19766cdcc001f4f96d474"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    import { getDatabase, ref, set, child, get, update } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js";
+
+    const db = getDatabase();
+
+    var tbody = document.getElementById("tbody1")
+
+    function Add(pltNum, time) {
+        let trow = document.createElement("trow");
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+
+        td1.innerHTML = pltNum;
+        td2.innerHTML = time;
+
+        trow.appendChild(td1);
+        trow.appendChild(td2);
+
+        tbody.appendChild(trow);
+    }
+
+    function addToTable(Cars) {
+        tbody.innerHTML = "";
+        Cars.forEach(element => {
+            Add(element.CarNo, element.Time);
+        });
+    }
+
+    function getData() {
+        const dbRef = ref(db);
+
+        get(child(dbRef,"CarParkStatus/A1/History"))
+        .then((snapshot)=>{
+            var car = [];
+
+            snapshot.forEach(childSnapshot =>{
+                car.push(childSnapshot.val());
+            });
+            addToTable(car);
+        });
+    }
+
+    window.onload = getData();
+
+
+</script>
+
+</html>

@@ -1,0 +1,299 @@
+body {
+    background-color: #9BA3EB;
+
+}
+
+h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: whitesmoke;
+    background-color: #242F9B;
+    padding: 10px;
+    margin: 0;
+    border-bottom: 2px solid black;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #4d549b;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    margin: 5px;
+}
+
+li a:hover {
+    font-weight: bolder;
+    background-color: darkslateblue;
+}
+
+#signout {
+    float: right;
+}
+
+.message {
+    color: antiquewhite;
+    margin: 10px;
+    background-color: red;
+    border: solid 4px red;
+    border-radius: 10px;
+    width: 200px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.message1 {
+    color: antiquewhite;
+    margin: 10px;
+    background-color: gray;
+    border: solid 4px gray;
+    border-radius: 10px;
+    width: 200px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+.main {
+    border: 2px solid darkblue;
+    border-radius: 10px;
+    background-color: #C4D7E0;
+    margin: 15vh auto 0;
+    padding: 15px;
+    height: fit-content;
+    width: 60vh;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+    /* overflow: auto; */
+}
+
+.main label {
+    margin: 5px;
+    width: 20%;
+    height: fit-content;
+
+}
+
+.main span {
+    padding: 2px auto;
+    width: 60%;
+    margin: 5px;
+    border-style: ridge;
+}
+
+.main input {
+    width: 40%;
+    margin: 5px;
+    height: fit-content;
+}
+
+.main button {
+    height: fit-content;
+    margin: 5px;
+}
+
+.main select {
+    height: fit-content;
+    margin: 5px;
+}
+
+.main #cancel_btn {
+    background-color: crimson;
+    color: beige;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.main #cancel_btn:hover {
+    font-weight: bold;
+    background-color: aliceblue;
+    color: crimson;
+}
+
+.main #edit_btn {
+    margin: auto 3px;
+    background-color: #242F9B;
+    color: beige;
+    border-radius: 5px;
+    padding: 5px 10px;
+
+}
+
+.main #update_btn {
+    margin: 5px;
+    background-color: #242F9B;
+    color: beige;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 250px;
+
+}
+
+#update_btn:hover {
+    color: #242F9B;
+    background-color: bisque;
+    font-weight: bold;
+}
+
+#edit_btn:hover {
+    color: #242F9B;
+    background-color: bisque;
+    font-weight: bold;
+}
+
+.main .edit {
+    width: 60%;
+}
+
+.main #plateInp {
+    width: 50%;
+    background-color: aliceblue;
+    padding: 3px;
+}
+
+.main #add_btn {
+    margin: 5px;
+    background-color: #696d94;
+    color: beige;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.main #add_btn:hover {
+    background-color: mediumblue;
+    font-weight: bold;
+}
+
+#del_btn {
+    background-color: red;
+    color: beige;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+#del_btn:hover {
+    background-color: darkred;
+}
+
+#usercar {
+    width: 75%;
+}
+
+#disCar {
+    margin: 5vh auto;
+    background-color: #144348;
+    color: cornsilk;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#disCar label {
+    width: 25%;
+}
+
+#disCar input {
+    padding: 5px auto;
+    /* background-color: #77bddd; */
+
+
+
+}
+
+#disCar span {
+    border: hidden;
+
+}
+
+#userParking,
+#cpStatus {
+    font-weight: bold;
+    border: hidden;
+    width: fit-content;
+    font-family: sans-serif;
+}
+
+#carstatus {
+    background-color: rgb(230, 236, 243);
+}
+
+#car {
+    margin: auto;
+}
+
+#userCP{
+    margin: 10px auto;
+}
+
+th {
+    background-color: #242F9B;
+    width: 50vw;
+    padding: 5px 2px;
+    color: beige;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+td {
+    background-color: azure;
+    text-align: center;
+    padding: 3px 2px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#record {
+    width: 70vw;
+}
+
+#selectCarPark {
+    margin: 10px;
+    height: 30px;
+    /* width: 40px; */
+    font-size: large;
+    border: solid 2px grey;
+    border-radius: 8px;
+}
+
+.car {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: auto;
+    margin-top: 20px;
+    border: 2px solid darkblue;
+    border-radius: 5px;
+    background-color: #C4D7E0;
+
+}
+
+
+.listCar {
+    display: flex;
+    flex-wrap: wrap;
+    width: 850px;
+    height: max-content;
+    margin: auto;
+}
+
+.car {
+    transition: transform .2s;
+    /* Animation */
+
+}
+
+.car:hover {
+    transform: scale(1.15);
+}
+
+.label {
+    text-align: center;
+    font-size: larger;
+    margin: auto;
+}

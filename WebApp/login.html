@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <h1>CAR PARKING ASSISTANCE</h1>
+    <div id="loginform">
+        <div id="inputLogin" class="parent">
+            <h3>Login</h3>
+            <label for="userInp" class="input">Username: </label>
+            <input type="text" placeholder="Enter your username" id="userInp" class="input"><br>
+            <label for="passInp" class="input">Password : </label>
+            <input type="password" placeholder="Enter your password" id="passInp" class="input"><br>
+
+            <!-- <a href="" id="fPass">Forget Password</a> -->
+            <button type="text" id="sub_btn">Login</button><br>
+            <a href="register.html" id="signup_btn">Sign Up</a>
+        </div>
+
+
+
+    </div>
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCKbTF6RVa2RyrTeUZdndSa8VL7FMcfYKw",
+            authDomain: "ongzhfyp-17d4a.firebaseapp.com",
+            projectId: "ongzhfyp-17d4a",
+            storageBucket: "ongzhfyp-17d4a.appspot.com",
+            messagingSenderId: "620764528797",
+            appId: "1:620764528797:web:c19766cdcc001f4f96d474"
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        import { getDatabase, ref, set, child, get } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js";
+
+        const db = getDatabase();
+
+        const username = document.getElementById('userInp');
+        const pass = document.getElementById('passInp');
+        const submit = document.getElementById('sub_btn');
+
+        function isEmpty(str) {
+            return str === null || str.match(/^ *$/) !== null;
+        }
+
+        function Validation() {
+
+            let nameregex = /^[a-zA-Z]+$/;
+            let emailregex = /^[a-zA-Z0-9]+@(gmail|yahoo|outlook)\.com$/;
+            let userregex = /^[a-zA-Z0-9]+$/;
+
+            if (isEmpty(name.value) || isEmpty(email.value) || isEmpty(username.value) || isEmpty(contact.value) || isEmpty(pass.value) || isEmpty(pass2.value)) {
+                alert("Please fill in!!")
+                return false;
+            }
+
+            if (!nameregex.test(name.value)) {
+                alert("Only contain alphabets!");
+                return false;
+            }
+
+            if (!emailregex.test(email.value)) {
+                alert("Enter a valid email!");
+                return false;
+            }
+
+            // if (!nameregex.test(contact.value)) {
+            //     alert("Only contain alphabets!");
+            //     return false;
+            // }
+
+            if (!userregex.test(username.value)) {
+                alert("Invalid!");
+                return false;
+            }
+
+            if (pass.value != pass2.value) {
+                alert('Password does not match!');
+                return false;
+            }
+
+            return true;
+
+        }
+
+        function AuthenticateUser() {
+
+            if (isEmpty(username.value) || isEmpty(pass.value)) {
+                alert("Please fill in!!")
+                return false;
+            }
+            else {
+                const dbref = ref(db);
+
+
+                get(child(dbref, "UserList/" + username.value)).then((snapshot) => {
+                    if (snapshot.exists()) {
+
+                        let dbpass = decPass(snapshot.val().password);
+                        if (dbpass == pass.value) {
+                            alert("WELCOME " + snapshot.val().fullname);
+                            login(snapshot.val());
+
+                        }
+                        else {
+                            alert("wrong Password!");
+                        }
+                    }
+
+                    else {
+                        alert("username or password is invalid");
+                    }
+
+                });
+
+            }
+        }
+
+        function decPass(dbpass) {
+            var pass12 = CryptoJS.AES.decrypt(dbpass, pass.value);
+            return pass12.toString(CryptoJS.enc.Utf8);
+        }
+
+        function login(user) {
+            sessionStorage.setItem('user', JSON.stringify(user));
+            window.location = "main.html";
+        }
+
+        submit.addEventListener('click', AuthenticateUser);
+    </script>
+</body>
+
+</html>

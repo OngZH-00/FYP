@@ -1,0 +1,23 @@
+form{
+    margin:auto;
+    width: fit-content;
+    height: fit-content;
+}
+
+div{
+    margin: 10px;
+}
+
+#selectAvatar{
+    margin: 10px;
+}
+
+textarea{
+    border: hidden;
+}
+
+.result{
+    margin: 10vh auto;
+    height: fit-content;
+    width: fit-content;
+}

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        h1 {
+            margin: 0;
+            background-color: darkblue;
+            color: azure;
+            padding: 10px;
+        }
+
+        body {
+            background-color: #AFB4FF;
+        }
+
+        form {
+            background-color: #9C9EFE;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            margin: 5vh auto;
+            width: fit-content;
+            height: fit-content;
+            border: 2px solid black;
+        }
+
+        select {
+            padding: 1px 3px;
+            border-radius: 5px;
+
+        }
+
+        input {
+            margin: 2px;
+            padding: 1px 5px;
+            border-radius: 5px;
+
+        }
+
+        input:hover {
+            background-color: blue;
+            color: bisque;
+        }
+
+        div {
+            margin: 10px;
+        }
+
+        img {
+            max-width: 50vw;
+            max-height: 50vh;
+        }
+
+        #selectAvatar {
+            margin: 10px;
+
+        }
+
+        #selectAvatar:hover {
+            background-color: #AFB4FF;
+            color: black;
+            font-weight: bold;
+        }
+
+        textarea {
+            display: none;
+        }
+
+        .result {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #B1E1FF;
+            margin: auto;
+            height: fit-content;
+            width: fit-content;
+            border: 1px solid black;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .result span {
+            margin: 3px;
+            padding: 10px;
+            font-weight: bold;
+        }
+    </style>
+    <title>
+        Car Plate Recognition System
+    </title>
+</head>
+
+<body>
+    <h1>Car Plate Detection </h1>
+
+
+    <form id="form" action="/detect-car-plate" method="post">
+        <div>
+            <label for="select1">Block:</label>
+            <select id="select1">
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+            <label for="parkingNo">Parking NO:</label>
+            <select name="parkingNo" id="parkingNo">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <input type="file" id="selectAvatar" name="selectAvatar">
+        <input type="submit" name="form" value="Submit" />
+        <p>Image Preview:</p>
+        <img class="img" id="avatar" />
+        <textarea id="textArea" name="imageBase64" class="d-none"></textarea>
+    </form>
+    <div class="result">
+        <span id="span">Car Plate Number: </span><br>
+        <span id="result">{{ result }}</span>
+    </div>
+
+
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCKbTF6RVa2RyrTeUZdndSa8VL7FMcfYKw",
+            authDomain: "ongzhfyp-17d4a.firebaseapp.com",
+            projectId: "ongzhfyp-17d4a",
+            storageBucket: "ongzhfyp-17d4a.appspot.com",
+            messagingSenderId: "620764528797",
+            appId: "1:620764528797:web:c19766cdcc001f4f96d474"
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        import { getDatabase, ref, set, child, get, remove, update, push } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js";
+
+        const db = getDatabase();
+        const input = document.getElementById("selectAvatar");
+        const avatar = document.getElementById("avatar");
+        const textArea = document.getElementById("textArea");
+        var blockNo;
+        var pNo;
+        var selectElement = null;
+
+
+        const convertBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+
+                fileReader.onload = () => {
+                    resolve(fileReader.result);
+                };
+
+                fileReader.onerror = (error) => {
+                    reject(error);
+                };
+            });
+        };
+
+        const uploadImage = async (event) => {
+
+            const file = event.target.files[0];
+            const base64 = await convertBase64(file);
+            avatar.src = base64;
+            textArea.innerText = base64;
+        };
+
+        input.addEventListener("change", (e) => {
+            uploadImage(e);
+        });
+
+        // form.addEventListener('submit', event => {
+        //     // submit event detected
+        //     event.preventDefault()
+        // })
+
+        // document.getElementById("enter").onclick = function () { myFunction() };
+
+        function getBlock() {
+            selectElement = document.querySelector('#select1');
+            blockNo = selectElement.options[selectElement.selectedIndex].value;
+
+        }
+
+        function getPNo() {
+            selectElement = document.querySelector('#parkingNo');
+            pNo = selectElement.options[selectElement.selectedIndex].value;
+
+        }
+
+        function getAns() {
+            getPNo();
+            getBlock();
+            // alert(blockNo + pNo);
+            sessionStorage.setItem("CarPark", blockNo + pNo);
+            if (input.files.length == 0) {
+                // alert("no files selected");
+                // var ans = sessionStorage.getItem("CarPark")
+                // set(ref(db, "CarParkStatus/" + ans),
+                // {
+                //     Car: "",
+                //     Time: ""
+                // })
+                // .then(() => {
+                //     // alert("successfully");
+                // })
+                // .catch((error) => {
+                //     alert("error" + error);
+                // })
+
+            }
+        }
+
+
+        function cpStatus(carpark) {
+            var current = new Date();
+            const dbRef = ref(db);
+            // var carpark = blockNo+pNo
+            // alert(blockNo + pNo);
+
+            if (result.innerHTML == "listindexoutofrange") {
+                document.getElementById('span').innerHTML = "The parking is empty now"
+                document.getElementById('result').style.display = "none";
+                update(child(dbRef, "CarParkStatus/" + carpark),
+                    {
+                        Car: "",
+                        Date: "",
+                        Time: ""
+                    }).then(() => {
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    })
+            } else {
+                update(child(dbRef, "CarParkStatus/" + carpark),
+                    {
+                        Car: result.innerHTML,
+                        Date: current.toLocaleDateString(),
+                        Time: current.toLocaleTimeString().replace(/(.*)\D\d+/, '$1')
+                    })
+                    .then(() => {
+                        // alert("successfully");
+                        sessionStorage.setItem("Car", result.innerHTML);
+                        push(child(dbRef, "CarParkStatus/" + carpark + "/History"), {
+                            CarNo: result.innerHTML,
+                            Time: current.toLocaleTimeString().replace(/(.*)\D\d+/, '$1'),
+                            Date: current.toLocaleDateString()
+                        });
+                    })
+                    .catch((error) => {
+                        alert("error" + error);
+                    })
+            }
+
+            // if (typeof result ==="string") {
+            //     set(ref(db, "CarParkStatus/" + carpark),
+            //         {
+            //             Car: result.innerHTML,
+            //             Time: current.toLocaleString()
+            //         })
+            //         .then(() => {
+            //             // alert("successfully");
+            //         })
+            //         .catch((error) => {
+            //             alert("error" + error);
+            //         })
+            // }
+            // else {
+            //     set(ref(db, "CarParkStatus/" + carpark),
+            //         {
+            //             Car: "",
+            //             Time:""
+            //         })
+            //         .then(() => {
+            //             // alert("successfully");
+            //         })
+            //         .catch((error) => {
+            //             alert("error" + error);
+            //         })
+
+            // }
+        }
+
+        document.getElementById("form").addEventListener("submit", getAns);
+
+
+
+        const result = document.getElementById("result");
+
+        window.onload = function () {
+
+
+            if (result.innerHTML != "") {
+                var ans = sessionStorage.getItem("CarPark");
+                result.innerHTML = result.innerHTML.replace(/ /g, "");
+                // alert(result.innerHTML);
+
+                cpStatus(ans);
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
