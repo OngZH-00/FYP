@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Car</title>
+
+</head>
+
+<body>
+    <h1>CAR PARKING ASSISTANCE</h1>
+
+
+    <ul>
+        <li>
+            <a href="main.html">Home</a>
+        </li>
+        <li>
+            <a href="profile.html">Profile</a>
+        </li>
+        <li>
+            <a href="addparking.html">My Car Park</a>
+        </li>
+        <li>
+            <a href="carHis.html">Car Park History</a>
+        </li>
+        <li id="signout">
+            <a id="signoutlink" href="#">Sign Out</a>
+        </li>
+    </ul>
+
+    <div class="main" id="record">
+        <h3 id="userCP"></h3>
+        <table>
+            <tr>
+                <th>Plate Number</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+            <tbody id="tbody1"></tbody>
+        </table>
+        <h3 id="his">No record!</h3>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCKbTF6RVa2RyrTeUZdndSa8VL7FMcfYKw",
+            authDomain: "ongzhfyp-17d4a.firebaseapp.com",
+            projectId: "ongzhfyp-17d4a",
+            storageBucket: "ongzhfyp-17d4a.appspot.com",
+            messagingSenderId: "620764528797",
+            appId: "1:620764528797:web:c19766cdcc001f4f96d474"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        import { getDatabase, ref, set, child, get, remove } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js";
+
+        const db = getDatabase();
+
+        var tbody = document.getElementById("tbody1")
+        var currentUser = null;
+        var cpHis = document.getElementById("his");
+        var message = document.getElementById("userCP");
+
+        function Add(pltNum, date, time) {
+            let trow = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+
+            td1.innerHTML = pltNum;
+            td2.innerHTML = date;
+            td3.innerHTML = time;
+
+            trow.appendChild(td1);
+            trow.appendChild(td2);
+            trow.appendChild(td3);
+
+            tbody.appendChild(trow);
+        }
+
+        function addToTable(Cars) {
+            tbody.innerHTML = "";
+            Cars.forEach(element => {
+                Add(element.CarNo, element.Date, element.Time);
+            });
+        }
+
+        function getData() {
+            const dbRef = ref(db);
+            currentUser = JSON.parse(sessionStorage.getItem('user'));
+            message.innerHTML = currentUser.CarPark.Block + currentUser.CarPark.No +" Car Park History";
+
+            get(child(dbRef, "CarParkStatus/" + currentUser.CarPark.Block + currentUser.CarPark.No + "/History"))
+                .then((snapshot) => {
+                    var car = [];
+
+
+                    snapshot.forEach(childSnapshot => {
+                        car.push(childSnapshot.val());
+                        cpHis.style.display = "none";
+
+                    });
+                    addToTable(car);
+                    reverseData();
+                });
+        }
+
+        function Signout() {
+            window.location = "login.html";
+            sessionStorage.removeItem('user');
+
+        }
+
+        function reverseData() {
+
+            var display = document.getElementById("tbody1");
+            var length = display.rows.length;
+            for (var i = 0; i < length; i++) {
+                display.appendChild(
+                    display.removeChild(display.rows[length - i - 1])
+                );
+            }
+        }
+
+
+
+
+
+        // function getUsername() {
+        //     currentUser = JSON.parse(sessionStorage.getItem('user'));
+        //     alert(currentUser.CarPark.Block+currentUser.CarPark.No);
+        // }
+
+        window.onload = function () {
+            getData();
+            signoutlink.addEventListener('click', Signout);
+
+        }
+
+
+    </script>
+</body>
+
+</html>

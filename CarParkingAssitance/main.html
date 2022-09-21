@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="main.css">
+
+  <title>Main Page</title>
+</head>
+
+<body>
+
+  <h1>CAR PARKING ASSISTANCE</h1>
+
+
+  <ul>
+    <li>
+        <a href="main.html">Home</a>
+    </li>
+    <li>
+        <a href="profile.html">Profile</a>
+    </li>
+    <li>
+        <a href="addparking.html">My Car Park</a>
+    </li>
+    <li>
+        <a href="carHis.html">Car Park History</a>
+    </li>
+    <li id="signout">
+        <a id="signoutlink" href="#">Sign Out</a>
+    </li>
+</ul>
+
+  <form name="myform">
+    <select id="selectCarPark" name="option">
+      <option value="A">CarPark A</option>
+      <option value="B">CarPark B</option>
+    </select>
+  </form>
+
+  <p class="message"><span>Red color : </span> Parking available</p>
+  <p class="message1"><span>Gray color: </span> Parking unavailable</p>
+
+  <div id="cpA" class="listCar">
+    <!-- <span id="cp1"></span> -->
+    <div class="car">
+      <img id="carA1" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A1</h4>
+    </div>
+
+    <div class="car">
+      <img id="carA2" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A2</h4>
+    </div>
+
+    <div class="car">
+      <img id="carA3" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A3</h4>
+    </div>
+
+    <div class="car">
+      <img id="carA4" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A4</h4>
+    </div>
+
+    <div class="car">
+      <img id="carA5" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A5</h4>
+    </div>
+
+    <div class="car">
+      <img id="carA6" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A6</h4>
+    </div>
+
+    <div class="car">
+      <img id="carA7" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A7</h4>
+    </div>
+
+    <div class="car">
+      <img id="carA8" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A8</h4>
+    </div>
+
+    <div class="car">
+      <img id="carA9" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A9</h4>
+    </div>
+
+    <div class="car">
+      <img id="carA10" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">A10</h4>
+    </div>
+  </div>
+
+  <div id="cpB" class="listCar">
+    <!-- <span id="cp1"></span> -->
+    <div class="car">
+      <img id="carB1" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B1</h4>
+    </div>
+
+    <div class="car">
+      <img id="carB2" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B2</h4>
+    </div>
+
+    <div class="car">
+      <img id="carB3" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B3</h4>
+    </div>
+
+    <div class="car">
+      <img id="carB4" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B4</h4>
+    </div>
+
+    <div class="car">
+      <img id="carB5" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B5</h4>
+    </div>
+
+    <div class="car">
+      <img id="carB6" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B6</h4>
+    </div>
+
+    <div class="car">
+      <img id="carB7" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B7</h4>
+    </div>
+
+    <div class="car">
+      <img id="carB8" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B8</h4>
+    </div>
+
+    <div class="car">
+      <img id="carB9" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B9</h4>
+    </div>
+
+    <div class="car">
+      <img id="carB10" src="car1.jpg" alt="car" width="150" height="150">
+      <h4 class="label">B10</h4>
+    </div>
+  </div>
+
+
+
+  <script type="module">
+
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCKbTF6RVa2RyrTeUZdndSa8VL7FMcfYKw",
+      authDomain: "ongzhfyp-17d4a.firebaseapp.com",
+      projectId: "ongzhfyp-17d4a",
+      storageBucket: "ongzhfyp-17d4a.appspot.com",
+      messagingSenderId: "620764528797",
+      appId: "1:620764528797:web:c19766cdcc001f4f96d474"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    import { getDatabase, ref, set, child, get } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js";
+
+    const db = getDatabase();
+
+    let userlink = document.getElementById('user-link');
+    let signoutlink = document.getElementById('signoutlink');
+    let header = document.getElementById('hh');
+    var currentUser = null;
+    var cp1;
+    // var img1 = document.getElementById('carA1');
+
+    function getUsername() {
+      currentUser = JSON.parse(sessionStorage.getItem('user'));
+    }
+
+    function Signout() {
+      sessionStorage.removeItem('user');
+      window.location = "login.html";
+    }
+
+    function getCarpark() {
+      const dbref = ref(db);
+      // cp1.innerHTML = currentUser.username;
+      get(child(dbref, "CarParkStatus/A1")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA1').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/A2")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA2').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/A3")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA3').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/A4")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA4').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/A5")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA5').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/A6")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA6').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/A7")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA7').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/A8")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA8').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/A9")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA9').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/A10")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carA10').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B1")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB1').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B2")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB2').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B3")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB3').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B4")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB4').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B5")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB5').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B6")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB6').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B7")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB7').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B8")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB8').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B9")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB9').style.filter = "grayscale(100%)";
+        }
+      })
+
+      get(child(dbref, "CarParkStatus/B10")).then((snapshot) => {
+        cp1 = snapshot.val().Car;
+      }).then(() => {
+        if (cp1 != "") {
+          // img1.style.display = "";
+          document.getElementById('carB10').style.filter = "grayscale(100%)";
+        }
+      })
+
+
+    }
+
+    function selectCP() {
+      var opt = document.myform.option.selectedIndex;
+      var cpA = document.getElementById("cpA");
+      var cpB = document.getElementById("cpB");
+      if (document.myform.option.options[opt].value == "A") {
+        cpA.style.display = "";
+        cpB.style.display = "none";
+      }
+      else if (document.myform.option.options[opt].value == "B") {
+        cpA.style.display = "none";
+        cpB.style.display = "";
+      }
+    }
+
+
+    window.onload = function () {
+      // img1.style.display = "none";
+      // img1.style.filter = "grayscale(100%)";
+      document.getElementById("cpB").style.display = "none";
+
+
+      getUsername();
+      getCarpark();
+      signoutlink.addEventListener('click', Signout);
+      document.getElementById("selectCarPark").onchange = function () { selectCP() };
+
+    }
+
+  </script>
+
+</body>
+
+</html>
